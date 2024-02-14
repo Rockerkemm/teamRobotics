@@ -22,7 +22,7 @@ task main()
 	{
 		direction = -100;
 	}
-
+	turn90(direction, 50);
 	drive(0, 60, 50);
 	turn90(direction, 50);
 	drive(0, 60, 50);
@@ -39,9 +39,9 @@ void turn90(long nMotorRatio, long power)
 	resetMotorEncoder(Left);
 	resetMotorEncoder(Right);
 
-	setMotorSyncEncoder(Left, Right, nMotorRatio, 170, power);
+	setMotorSyncEncoder(Left, Right, nMotorRatio, 165, power);
 
-	waitUntilMotorStop(Right)
+	waitUntilMotorStop(Right);
 
 }
 
@@ -54,5 +54,5 @@ void drive(long nMotorRatio, long dist, long power)
 
 	setMotorSyncEncoder(Left, Right, nMotorRatio, rotations, power);
 
-	waitUntilMotorStop(Right)
+	waitUntilMotorStop(Right);
 }
