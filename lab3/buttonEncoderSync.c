@@ -17,46 +17,44 @@ task main()
 	int dist= 10;
 	int incRight= 0;
 
-	while (SensorValue[touchLeft]==0)
+	while (getButtonPress(buttonEnter) == 0 )
 	{
+		sleep(200);
 
-		sleep(150);
-
-		if (SensorValue[touchRight]==1)
+		if (getButtonPress(buttonUp))
 		{
-			incRight= incRight+1;
+			incRight++;
+		}
+
+		if (getButtonPress(buttonDown))
+		{
+			incRight--;
 		}
 
 		if (incRight % 4==1)
 		{
 			dist = 40;
 			displayCenteredBigTextLine(4,"Distance %d",dist);
-			displayCenteredBigTextLine(8,"Right:Distance");
-			displayCenteredBigTextLine(10,"Left:Confirm");
 		}
 
 		if (incRight % 4==2)
 		{
 			dist = 60;
 			displayCenteredBigTextLine(4,"Distance %d",dist);
-			displayCenteredBigTextLine(8,"Right:Distance");
-			displayCenteredBigTextLine(10,"Left:Confirm");
 		}
 
 		if (incRight % 4==3)
 		{
 			dist = 80;
 			displayCenteredBigTextLine(4,"Distance %d",dist);
-			displayCenteredBigTextLine(8,"Right:Distance");
-			displayCenteredBigTextLine(10,"Left:Confirm");
+
 		}
 
 		if (incRight % 4==0)
 		{
 			dist = 10;
 			displayCenteredBigTextLine(4,"Distance %d",dist);
-		displayCenteredBigTextLine(8,"Right:Distance");
-			displayCenteredBigTextLine(10,"Left:Confirm");
+
 		}
 	}
 	drive(0, dist, ranNum);
