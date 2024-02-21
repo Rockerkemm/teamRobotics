@@ -7,30 +7,29 @@
 
 //void turn90(long nMotorRatio, long power);
 
-void drive(long nMotorRatio, long dist, long power);
+//void drive(long nMotorRatio, long dist, long power);
 
 #define Centimetre 20.93
 
 task main()
 {
 	int count = 0;
-
+	int whiteLine=0;
 
 	while (!SensorValue(touchRight))
 	{
-		setMotorSpeed(Left, 50);
-		setMotorSpeed(Right, 50);
+		setMotorSpeed(Left, 30);
+		setMotorSpeed(Right, 30);
 
-		if (SensorValue(Light) < 40)
+		if (SensorValue(Light) < 40 && (whiteLine==1))
 		{
 			count++;
 			displayCenteredBigTextLine(3, "Black Lines: %d", count);
-			setMotorSpeed(Left, 0);
-			setMotorSpeed(Right, 0);
-			sleep(500);
-			drive(0 ,3 ,50);
-
-
+			whiteLine=0;
+		}
+		if (SensorValue(Light) > 40)
+		{
+			whiteLine=1;
 		}
 
 	}
@@ -49,7 +48,7 @@ void turn90(long nMotorRatio, long power)
 	waitUntilMotorStop(Right);
 
 }
-*/
+
 
 void drive(long nMotorRatio, long dist, long power)
 {
@@ -62,3 +61,4 @@ void drive(long nMotorRatio, long dist, long power)
 
 	waitUntilMotorStop(Right);
 }
+*/
