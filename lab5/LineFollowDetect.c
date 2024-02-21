@@ -15,29 +15,24 @@ task main()
 {
 	while (!SensorValue(touchRight))
 	{
-		if (SensorValue(Light) > 40)
-		{
-			setMotorSpeed(Left, 0);
-			setMotorSpeed(Right, 0);
-			sleep(20);
+		setMotorSpeed(Left, 20);
+		setMotorSpeed(Right, 35);
 
-		}
-		else if (SensorValue(Light) < 40)
+		if (SensorValue(Ultra) < 15)
 		{
-			setMotorSpeed(Left, 30);
-			setMotorSpeed(Right, 30);
-			sleep(20);
+			turn90(-100, 40);
+			drive(0, 15, 40);
+			turn90(100, 40);
+			drive(0, 40, 40);
+			turn90(100, 40);
+			drive(0, 15, 40);
+			turn90(-100, 40);
+		}
+		if (SensorValue(Light) < 40)
+		{
+			setMotorSpeed(Left, 50);
+			setMotorSpeed(Right, 20);
 
-		}
-		 if (SensorValue(Ultra) < 10)
-		{
-			turn90(-100, 50);
-			drive(0, 15, 50);
-			turn90(100, 50);
-			drive(0, 30, 50);
-			turn90(100, 50);
-			drive(0, 15, 50);
-			turn90(-100, 50);
 		}
 
 	}
@@ -51,7 +46,7 @@ void turn90(long nMotorRatio, long power)
 	resetMotorEncoder(Left);
 	resetMotorEncoder(Right);
 
-	setMotorSyncEncoder(motorB, motorC, nMotorRatio, 170, power);
+	setMotorSyncEncoder(motorB, motorC, nMotorRatio, 180, power);
 
 	waitUntilMotorStop(Right);
 
