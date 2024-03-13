@@ -2,60 +2,105 @@ void turnGyro(long power, long turnDegree);//the speed of the motors during the 
 
 void drive(long nMotorRatio, long dist, long power);// the ratio of the motors, how far in centimatres to travel, how fast to travel
 
+
 #define Centimetre 20.93
 
 task main()
 {
-
-	int count = 0;
+	
 	int notblack=0;
-	int dist=10;
-
-	while (!SensorValue(sensorEV3_Touch))
+	int locX=0;
+	int locY=5;
+	int destX=4;
+	int destY=1;
+	SensorType[2]=sensorEV3_Color;
+	
+	displayCenteredBigTextLine(3, "Location: [%d,%d]",locX,locY);
+	
+	setMotorSpeed(1, 80);
+	setMotorSpeed(2, 80);
+	
+	
+	while(locX<destX)
 	{
-		setMotorSpeed(motorB, 30);
-		setMotorSpeed(motorC, 30);
-
-		if (SensorValue(sensorEV3_Color) < 40 && (notblack==1))
+		if (SensorValue[2] < 40 && (notblack==1))
 		{
-			count++;
-			displayCenteredBigTextLine(3, "Black Lines: %d", count);
+			locX++;
+			displayCenteredBigTextLine(3, "Location: [%d,%d]",locX,locY);
 			notblack=0;
 		}
-		if (SensorValue(sensorEV3_Color) > 40)
+		if (SensorValue[2] > 40)
 		{
 			notblack=1;
 		}
-
 	}
-
-	drive(0, dist, 20); // travel foward dist cm at 20 power
-	turnGyro(10, 90); //power 10, turn motorC 90*
-
+	
+	if(locY<destY)
+	{
+		turnGyro(40,90);
+		locY--;
+	}
+	else
+	{
+		turnGyro(40,268);
+		locY++;
+	}
+	
+	
+	setMotorSpeed(1, 80);
+	setMotorSpeed(2, 80);
+	
+	while(locY<destY) //if destination above
+	{
+		if (SensorValue[2] < 40 && (notblack==1))
+		{
+			locY++;
+			displayCenteredBigTextLine(3, "Location: [%d,%d]",locX,locY);
+			notblack=0;
+		}
+		if (SensorValue[2] > 40)
+		{
+			notblack=1;
+		}
+	}
+	
+	while(locY>destY) //if destination below
+	{
+		if (SensorValue[2] < 40 && (notblack==1))
+		{
+			locY--;
+			displayCenteredBigTextLine(3, "Location: [%d,%d]",locX,locY);
+			notblack=0;
+		}
+		if (SensorValue[2] > 40)
+		{
+			notblack=1;
+		}
+	}
+	
+	
 }
 
 void turnGyro(long power, long turnDegree) //the speed of the motors during the turn, how many degrees motorC it will turn
-{
-	resetGyro(S3);
-	while(getGyroDegrees(S3) < turnDegree)//the minus is to account for the lag
+{	
+	SensorType[3]= sensorEV3_Gyro;
+	resetGyro(3);
+	while(getGyroDegrees(3) < turnDegree)//the minus is to account for the lag
 	{
-		displayCenteredBigTextLine(6,"sensorEV3_Gyro:%d",getGyroDegrees(S3));//debbugging text
-		setMotorSpeed(motorB,power);//motors are turning
-		setMotorSpeed(motorC,-power);
+		setMotorSpeed(1,power);//motors are turning
+		setMotorSpeed(2,-power);
 	}
-	setMotorSpeed(motorB,0);//stopping the motors after
-	setMotorSpeed(motorC,0);
-
+	setMotorSpeed(1,0);//stopping the motors after
+	setMotorSpeed(2,0);
+	
 }
 
 void drive(long nMotorRatio, long dist, long power) // the ratio of the motors, how far in centimatres to travel, how fast to travel
 {
 	int rotations = (Centimetre * dist);
-
-	resetMotorEncoder(motorB);
-	resetMotorEncoder(motorC);
-
-	setMotorSyncEncoder(motorB, motorC, nMotorRatio, rotations, power);
-
-	waitUntilMotorStop(motorC);
+	
+	resetMotorEncoder(1);
+	resetMotorEncoder(2);
+	
+	setMotorSyncEncoder(1, 2, nMotorRatio, rotations, power);
 }
