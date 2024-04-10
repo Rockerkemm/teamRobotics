@@ -10,7 +10,7 @@ task main()
 	
 	int notblack=0;
 	int locX=6;
-	int locY=1;
+	int locY=6;
 	int destX=5;
 	int destY=5;
 	int direction = 2;
@@ -36,7 +36,6 @@ task main()
 			locX++;
 			displayCenteredBigTextLine(3, "Location: [%d,%d]",locX,locY);
 			notblack=0;
-			
 		}
 		if (SensorValue[2] > 40)
 		{
@@ -44,12 +43,17 @@ task main()
 		}
 	}
 	
+	if (locX == 1)
+	{
+		locX++;
+	}
+	
 	while (locX > destX)
 		
 	{
 		while (direction < 4)
 		{
-			turnGyro(40,90);
+			turnGyro(40,88);
 			direction++;
 		}
 		
@@ -72,7 +76,7 @@ task main()
 	{
 		while (direction > 1)
 		{
-			turnGyro(40,90);
+			turnGyro(40,88);
 			direction = 1;
 		}
 		
@@ -81,7 +85,7 @@ task main()
 	{
 		while (direction < 3)
 		{
-			turnGyro(40,90);
+			turnGyro(40,88);
 			direction++;
 		}
 		
