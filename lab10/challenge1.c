@@ -10,7 +10,7 @@ task main()
 	
 	int notblack=0;
 	int locX=6;
-	int locY=6;
+	int locY=1;
 	int destX=5;
 	int destY=5;
 	int direction = 2;
@@ -72,25 +72,6 @@ task main()
 		}
 	}
 	
-	if(locY<destY)
-	{
-		while (direction > 1)
-		{
-			turnGyro(40,88);
-			direction = 1;
-		}
-		
-	}
-	else
-	{
-		while (direction < 3)
-		{
-			turnGyro(40,88);
-			direction++;
-		}
-		
-		
-	}
 	
 	
 	setMotorSpeed(1, 100);
@@ -112,10 +93,30 @@ task main()
 	}
 	
 	
-	if (locY == 1)
+	if(locY<destY && direction==2)
 	{
+		turnGyro(40,266);
 		locY--;
 	}
+	else if(locY>destY && direction==2)
+	{
+		turnGyro(40,90);
+		locY++;
+	}
+	
+	else if(locY<destY && direction==4)
+	{
+		turnGyro(40,87);
+		locY--;
+	}
+	else if(locY>destY && direction==4)
+	{
+		turnGyro(40,268);
+		locY++;
+	}
+	
+	setMotorSpeed(1, 100);
+	setMotorSpeed(2, 100);
 	
 	while(locY<destY) //if destination above
 	{
