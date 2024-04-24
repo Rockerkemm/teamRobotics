@@ -3,11 +3,11 @@ void turnGyro(long power, long turnDegree);//the speed of the motors during the 
 void drive(long nMotorRatio, long dist, long power);// the ratio of the motors, how far in centimatres to travel, how fast to travel
 
 
-#define Centimetre 20.93
+#define Centimetre 20.93 //assigning symbolic names
 
 task main()
 {
-	
+	//assigning variables
 	int notblack=0;
 	int locX=6;
 	int locY=1;
@@ -15,14 +15,15 @@ task main()
 	int destY=5;
 	int direction = 2;
 	
-	
+	//assigning sensor types
 	SensorType[2]=sensorEV3_Color;
 	
 	displayCenteredBigTextLine(3, "Location: [%d,%d]",locX,locY);
 	
 	setMotorSpeed(1, 100);
 	setMotorSpeed(2, 100);
-	
+
+	//if the location starts at 1, it will add another one to account the outside the box detection
 	if (locX == 1)
 	{
 		locX--;
@@ -42,7 +43,7 @@ task main()
 			notblack=1;
 		}
 	}
-	
+	//if the location starts at 1, it will add another one to account the outside the box detection
 	if (locX == 1)
 	{
 		locX++;
@@ -51,6 +52,7 @@ task main()
 	while (locX > destX)
 		
 	{
+		//senses for whether it has passed a black line, if so take away or add value
 		while (direction < 4)
 		{
 			turnGyro(40,88);
@@ -80,6 +82,7 @@ task main()
 	while (locX > destX)
 		
 	{
+		//senses for whether it has passed a black line, if so take away or add value
 		if (SensorValue[2] < 40 && (notblack==1))
 		{	
 			locX--;
@@ -92,7 +95,7 @@ task main()
 		}
 	}
 	
-	
+	//change the direction value of the robot depending on the direction its facing
 	if(locY<destY && direction==2)
 	{
 		turnGyro(40,266);
@@ -120,6 +123,7 @@ task main()
 	
 	while(locY<destY) //if destination above
 	{
+		//senses for whether it has passed a black line, if so take away or add value
 		if (SensorValue[2] < 40 && (notblack==1))
 		{
 			locY++;
@@ -134,6 +138,7 @@ task main()
 	
 	while(locY>destY) //if destination below
 	{
+		//senses for whether it has passed a black line, if so take away or add value
 		if (SensorValue[2] < 40 && (notblack==1))
 		{
 			locY--;
@@ -167,7 +172,7 @@ void drive(long nMotorRatio, long dist, long power) // the ratio of the motors, 
 {
 	int rotations = (Centimetre * dist);
 	
-	resetMotorEncoder(1);
+	resetMotorEncoder(1);	 //reset both motor encoders 
 	resetMotorEncoder(2);
 	
 	setMotorSyncEncoder(1, 2, nMotorRatio, rotations, power);
